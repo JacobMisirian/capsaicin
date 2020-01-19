@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define REG_FLAGS 0xC
+#define REG_FLGS 0xC
 #define REG_BP 0xD
 #define REG_IP 0xE
 #define REG_STACK 0XF
