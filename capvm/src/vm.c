@@ -17,5 +17,15 @@ void free_vm (struct vm * vm) {
 }
 
 void vm_run (struct vm * vm) {
-  
+  struct inst inst;
+
+  vm->registers [REG_IP] = 0;
+
+  while (1) {
+    inst = unpack_inst (((uint32_t *) vm->ram) [vm->registers [REG_BP]]);
+
+
+
+    vm->registers [REG_BP] ++;
+  }
 }
