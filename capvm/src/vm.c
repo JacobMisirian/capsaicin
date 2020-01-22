@@ -1,6 +1,6 @@
 #include <vm.h>
 
-struct vm * init_vm (char * prog, size_t prog_size, size_t ram_size) {
+struct vm * vm_init (char * prog, size_t prog_size, size_t ram_size) {
   struct vm * vm;
 
   vm = calloc (1, sizeof (struct vm));
@@ -11,7 +11,7 @@ struct vm * init_vm (char * prog, size_t prog_size, size_t ram_size) {
   return vm;
 }
 
-void free_vm (struct vm * vm) {
+void vm_free (struct vm * vm) {
   free (vm->ram);
   free (vm);
 }
@@ -24,7 +24,7 @@ void vm_run (struct vm * vm) {
   vm->registers [REG_IP] = 0;
 
   while (1) {
-    inst = unpack_inst (((uint32_t *) vm->ram) [vm->registers [REG_BP]]);
+    inst = unpack_inst (*(uint32_t *) (vm->ram + vm->registers [REG_IP]));
 
     switch (inst.op_code) {
       case add:
@@ -90,10 +90,10 @@ void vm_run (struct vm * vm) {
       case sb:
         vm->ram [vm->registers [inst.op1]] = inst.op2;
         break;
-      case shil:
+      case shl:
         set_flags (vm, vm->registers [inst.op1] << vm->registers [inst.op2]);
         break;
-      case shir:
+      case shr:
         set_flags (vm, vm->registers [inst.op1] >> vm->registers [inst.op2]);
         break;
       case sw:

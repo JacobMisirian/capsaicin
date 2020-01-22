@@ -20,8 +20,8 @@ struct vm {
   uint16_t   registers [16];
 };
 
-struct vm * init_vm (char * prog, size_t prog_size, size_t ram_size);
-void        free_vm (struct vm * vm);
+struct vm * vm_init (char * prog, size_t prog_size, size_t ram_size);
+void        vm_free (struct vm * vm);
 
 void vm_run (struct vm * vm);
 
